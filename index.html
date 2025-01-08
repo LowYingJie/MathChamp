@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <!-- Two-line title -->
+      <h1>
+        Lab Equipment <br>
+        Management System
+      </h1>
+
+      <!-- Input fields -->
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+
+      <!-- Admin button below email -->
+      <button id="admin-button">Admin</button>
+
+      <!-- Login and Register buttons side by side -->
+      <div class="button-group">
+        <button id="login-button">Login</button>
+        <button id="registration-button">Register</button>
+      </div>
+
+      <p id="login-status"></p>
+    </div>
+
+    <script src="firebase.js" type="module"></script>
+    <script src="Userlogin.js" type="module"></script>
+  </body>
+</html>
