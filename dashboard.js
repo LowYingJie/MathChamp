@@ -1,16 +1,16 @@
-import { db } from "./firebaseConfig.js";
-import { ref, onValue } from "firebase/database";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-const playerRef = ref(db, "/players");
+const auth = getAuth();
 
-onValue(playerRef, (snapshot) => {
-  const players = snapshot.val();
-  const tableBody = document.querySelector("#playerTable tbody");
-  tableBody.innerHTML = "";
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is logged in, display dashboard content
+    const welcomeMessage = document.getElementById('welcome-message');
+    welcomeMessage.textContent = `Welcome, ${user.email}`;
 
-  for (let uid in players) {
-    const player = players[uid];
-    const row = `<tr><td>${uid}</td><td>${player.score}</td></tr>`;
-    tableBody.innerHTML += row;
+    // ... fetch and display user-specific data (e.g., scores)
+  } else {
+    // User is not logged in, redirect to login page
+    window.location.href = '/login';
   }
 });
