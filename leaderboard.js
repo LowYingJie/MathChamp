@@ -9,11 +9,10 @@ document.getElementById("classTitle").textContent = `Leaderboard - Class ${selec
 
 // Mock leaderboard data
 const mockData = [
-  { rank: 1, name: "Alice", correctRate: 95 },
-  { rank: 2, name: "Bob", correctRate: 90 },
-  { rank: 3, name: "Charlie", correctRate: 85 },
-  { rank: 4, name: "Daisy", correctRate: 80 },
-  { rank: 5, name: "Eve", correctRate: 75 },
+  { rank: 1, name: "Siti", correctRate: 95 },
+  { rank: 2, name: "Ali", correctRate: 90 },
+  { rank: 3, name: "Xiao Mei", correctRate: 85 },
+  { rank: 4, name: "Viveka", correctRate: 80 },
 ];
 
 // Populate the leaderboard table
