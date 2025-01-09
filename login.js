@@ -4,6 +4,7 @@ import firebaseConfig from './firebase.js'; // Import your config
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+console.log("Firebase app initialized:", app.name);
 const auth = getAuth(app);
 
 const loginForm = document.getElementById('loginForm');
@@ -11,8 +12,13 @@ const loginForm = document.getElementById('loginForm');
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault(); // Prevent page refresh
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+        alert("Please fill in both email and password fields.");
+        return;
+    }
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -24,6 +30,13 @@ loginForm.addEventListener('submit', (e) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.error("Login Error:", errorCode, errorMessage);
-            alert("Login Failed. Check your credentials."); // Basic error display
+
+            if (errorCode === 'auth/user-not-found') {
+                alert("No user found with this email.");
+            } else if (errorCode === 'auth/wrong-password') {
+                alert("Incorrect password.");
+            } else {
+                alert("Login Failed. Please try again.");
+            }
         });
 });
