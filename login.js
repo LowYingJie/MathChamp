@@ -21,7 +21,7 @@ loginForm.addEventListener('submit', (e) => {
     }
 
     // Check for hardcoded credentials for testing
-    if (email === "lowjie@graduate.utm.my" && password === "12345") {
+    if (email === "lowjie@graduate.utm.my" && password === "123456") {
         console.log("Test credentials verified.");
         alert("Login successful with test credentials.");
         window.location.href = "homepage.html"; // Redirect
