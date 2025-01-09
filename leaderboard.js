@@ -6,6 +6,10 @@ const selectedClass = urlParams.get("class");
 
 // Set the class name in the title
 document.getElementById("classTitle").textContent = `Leaderboard - Class ${selectedClass}`;
+// Handle the "Back to Class Selection" button
+document.getElementById("backButton").addEventListener("click", () => {
+  window.location.href = "homepage.html"; // Navigate back to the class selection page
+});
 
 // Unique leaderboard data for each class
 const classData = {
