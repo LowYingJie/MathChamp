@@ -1,4 +1,19 @@
-// leaderboard.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // Get the selected class from the query string
 const urlParams = new URLSearchParams(window.location.search);
@@ -6,77 +21,42 @@ const selectedClass = urlParams.get("class");
 
 // Set the class name in the title
 document.getElementById("classTitle").textContent = `Leaderboard - Class ${selectedClass}`;
+
+// Fetch leaderboard data from Firestore
+async function fetchLeaderboardData(classId) {
+  const docRef = doc(db, "leaderboard", classId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data().students; // Return students array
+  } else {
+    console.error("No data found for class:", classId);
+    return [];
+  }
+}
+
+// Populate the leaderboard table
+async function populateLeaderboard() {
+  const leaderboardData = await fetchLeaderboardData(selectedClass);
+  const leaderboardTable = document.getElementById("leaderboardTable");
+
+  leaderboardData.forEach((student) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${student.rank}</td>
+      <td>${student.name}</td>
+      <td>${student.studentId}</td>
+      <td>${student.date}</td>
+      <td>${student.correctRate}</td>
+    `;
+    leaderboardTable.appendChild(row);
+  });
+}
+
+// Fetch and display leaderboard data
+populateLeaderboard();
+
 // Handle the "Back to Class Selection" button
 document.getElementById("backButton").addEventListener("click", () => {
   window.location.href = "homepage.html"; // Navigate back to the class selection page
-});
-
-
-// Unique leaderboard data for each class
-const classData = {
-  "1A": [
-    { rank: 1, name: "Ahmad", correctRate: 95 },
-    { rank: 2, name: "Lim Wei", correctRate: 90 },
-    { rank: 3, name: "Kavitha", correctRate: 85 },
-    { rank: 4, name: "Nurul", correctRate: 80 },
-  ],
-  "1B": [
-    { rank: 1, name: "Hafiz", correctRate: 92 },
-    { rank: 2, name: "Tan Jia", correctRate: 88 },
-    { rank: 3, name: "Rajesh", correctRate: 84 },
-    { rank: 4, name: "Aisyah", correctRate: 78 },
-  ],
-  "1C": [
-    { rank: 1, name: "Amin", correctRate: 96 },
-    { rank: 2, name: "Chong Li", correctRate: 92 },
-    { rank: 3, name: "Preeti", correctRate: 89 },
-    { rank: 4, name: "Farah", correctRate: 85 },
-  ],
-  "1D": [
-    { rank: 1, name: "Hakim", correctRate: 94 },
-    { rank: 2, name: "Ng Mei", correctRate: 89 },
-    { rank: 3, name: "Anand", correctRate: 86 },
-    { rank: 4, name: "Siti", correctRate: 82 },
-  ],
-  "2A": [
-    { rank: 1, name: "Ali", correctRate: 93 },
-    { rank: 2, name: "Lee Ching", correctRate: 89 },
-    { rank: 3, name: "Subash", correctRate: 86 },
-    { rank: 4, name: "Zainab", correctRate: 83 },
-  ],
-  "2B": [
-    { rank: 1, name: "Faiz", correctRate: 92 },
-    { rank: 2, name: "Wong Kai", correctRate: 88 },
-    { rank: 3, name: "Manoj", correctRate: 84 },
-    { rank: 4, name: "Amirah", correctRate: 81 },
-  ],
-  "2C": [
-    { rank: 1, name: "Shafiq", correctRate: 95 },
-    { rank: 2, name: "Chen Wei", correctRate: 91 },
-    { rank: 3, name: "Deepa", correctRate: 88 },
-    { rank: 4, name: "Hidayah", correctRate: 84 },
-  ],
-  "2D": [
-    { rank: 1, name: "Zul", correctRate: 93 },
-    { rank: 2, name: "Teoh Min", correctRate: 90 },
-    { rank: 3, name: "Ganesh", correctRate: 87 },
-    { rank: 4, name: "Laila", correctRate: 82 },
-  ],
- 
-};
-
-// Get leaderboard data for the selected class or fallback to an empty array
-const leaderboardData = classData[selectedClass] || [];
-
-// Populate the leaderboard table
-const leaderboardTable = document.getElementById("leaderboardTable");
-
-leaderboardData.forEach((student) => {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${student.rank}</td>
-    <td>${student.name}</td>
-    <td>${student.correctRate}</td>
-  `;
-  leaderboardTable.appendChild(row);
 });
