@@ -60,8 +60,3 @@ async function populateLeaderboard() {
 
 // Fetch and display leaderboard data
 populateLeaderboard();
-
-// Handle the "Back to Class Selection" button
-document.getElementById("backButton").addEventListener("click", () => {
-  window.location.href = "homepage.html"; // Navigate back to the class selection page
-});
