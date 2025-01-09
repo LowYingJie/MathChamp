@@ -20,15 +20,21 @@ loginForm.addEventListener('submit', (e) => {
         return;
     }
 
-    // Check for hardcoded credentials for testing
-    if (email === "lowjie@graduate.utm.my" && password === "123456") {
-        console.log("Test credentials verified.");
-        alert("Login successful with test credentials.");
-        window.location.href = "homepage.html"; // Redirect
+    // Check if email ends with @primary.mathchamp.my and password contains "mathchamp"
+    const emailPattern = /@primary\.mathchamp\.my$/;
+    const passwordPattern = /mathchamp/;
+
+    if (!emailPattern.test(email)) {
+        alert("Invalid email. Please use an email ending with '@primary.mathchamp.my'.");
         return;
     }
 
-    // Proceed with Firebase Authentication for other users
+    if (!passwordPattern.test(password)) {
+        alert("Invalid password. Password must contain 'mathchamp'.");
+        return;
+    }
+
+    // Proceed with Firebase Authentication
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
