@@ -56,6 +56,9 @@ const selectedClass = urlParams.get("class");
 
 // Set the class name in the title
 document.getElementById("classTitle").textContent = `Leaderboard - Class ${selectedClass}`;
+document.getElementById("backButton").addEventListener("click", () => {
+  window.location.href = "homepage.html"; // Redirect to class selection page
+});
 
 // Get leaderboard data for the selected class or fallback to an empty array
 const leaderboardData = classData[selectedClass] || [];
