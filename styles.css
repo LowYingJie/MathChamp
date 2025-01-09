@@ -1,84 +1,163 @@
 /* General body styling */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
-  background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+  background: #23242a;
 }
 
 /* Login container styling */
 .login-container {
-  background: #ffffff;
-  padding: 20px;
+  position: relative;
+  width: 380px;
+  padding: 50px 40px;
+  background: #28292d;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  overflow: hidden;
   text-align: center;
-  box-sizing: border-box;
+}
+
+/* Animated border effects */
+.login-container::before,
+.login-container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  transform-origin: bottom right;
+  background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+  z-index: 1;
+  animation: rotate-border 6s linear infinite;
+}
+.login-container::after {
+  animation-delay: -3s;
+}
+
+@keyframes rotate-border {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Title styling */
 .login-container h1 {
-  margin-bottom: 20px;
   font-size: 24px;
-  font-weight: bold;
-  color: #333;
+  font-weight: 600;
+  color: #45f3ff;
+  margin-bottom: 20px;
+  z-index: 2;
 }
 
-/* Input fields styling */
-.login-container input {
+/* Input fields styling with animation */
+.inputBox {
+  position: relative;
+  margin-top: 35px;
+}
+.inputBox input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 20px 10px 10px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
   font-size: 16px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  transition: 0.5s;
+  z-index: 10;
+}
+.inputBox span {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  color: #8f8f8f;
+  font-size: 16px;
+  transition: 0.5s;
+  pointer-events: none;
+}
+.inputBox input:focus ~ span,
+.inputBox input:valid ~ span {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #45f3ff;
+}
+.inputBox i {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  height: 2px;
+  width: calc(100% - 20px);
+  background: #45f3ff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s;
+  z-index: 9;
+}
+.inputBox input:focus ~ i,
+.inputBox input:valid ~ i {
+  transform: scaleX(1);
 }
 
-.login-container input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-  outline: none;
+/* Links styling */
+.links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.links a {
+  color: #8f8f8f;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.links a:hover {
+  color: #45f3ff;
 }
 
 /* Button styling */
-.login-container button {
-  width: 100%;
-  padding: 12px;
-  background: #007bff;
-  color: #ffffff;
+.login-container button,
+input[type="submit"] {
   border: none;
+  outline: none;
+  padding: 12px;
+  background: #45f3ff;
+  color: #ffffff;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-sizing: border-box;
+  transition: background-color 0.3s, transform 0.2s;
 }
-
-.login-container button:hover {
-  background: #0056b3;
+.login-container button:hover,
+input[type="submit"]:hover {
+  background: #007bff;
   transform: translateY(-2px);
+}
+input[type="submit"]:active {
+  opacity: 0.8;
 }
 
 /* Responsive design */
 @media (max-width: 480px) {
   .login-container {
     width: 90%;
-    padding: 15px;
+    padding: 30px 20px;
   }
-
-  .login-container h1 {
-    font-size: 20px;
-  }
-
-  .login-container input,
-  .login-container button {
+  .inputBox input,
+  .inputBox span {
     font-size: 14px;
-    padding: 10px;
+  }
+  .links a {
+    font-size: 12px;
   }
 }
