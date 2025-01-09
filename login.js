@@ -1,24 +1,29 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { app } from "./firebase.js"; // Import initialized Firebase app
+import firebaseConfig from './firebase.js'; // Import your config
 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-document.getElementById("loginForm").addEventListener("submit", async (event) => {
-  event.preventDefault(); // Prevent form submission
+const loginForm = document.getElementById('loginForm');
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent page refresh
 
-  try {
-    // Authenticate user with email and password
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    console.log("User logged in:", user);
-    alert("Login successful!");
-    window.location.href = "homepage.html"; // Redirect to homepage
-  } catch (error) {
-    console.error("Error during login:", error.message);
-    alert("Invalid email or password. Please try again.");
-  }
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            console.log("User logged in:", userCredential.user); // Check in console
+            window.location.href = "homepage.html"; // Redirect
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error("Login Error:", errorCode, errorMessage);
+            alert("Login Failed. Check your credentials."); // Basic error display
+        });
 });
