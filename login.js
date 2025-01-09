@@ -20,10 +20,20 @@ loginForm.addEventListener('submit', (e) => {
         return;
     }
 
+    // Check for hardcoded credentials for testing
+    if (email === "lowjie@graduate.utm.my" && password === "12345") {
+        console.log("Test credentials verified.");
+        alert("Login successful with test credentials.");
+        window.location.href = "homepage.html"; // Redirect
+        return;
+    }
+
+    // Proceed with Firebase Authentication for other users
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             console.log("User logged in:", userCredential.user); // Check in console
+            alert("Login successful!");
             window.location.href = "homepage.html"; // Redirect
         })
         .catch((error) => {
