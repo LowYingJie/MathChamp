@@ -24,13 +24,18 @@ document.getElementById("classTitle").textContent = `Leaderboard - Class ${selec
 
 // Fetch leaderboard data from Firestore
 async function fetchLeaderboardData(classId) {
-  const docRef = doc(db, "leaderboard", classId);
-  const docSnap = await getDoc(docRef);
+  try {
+    const docRef = doc(db, "leaderboard", classId);
+    const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    return docSnap.data().students; // Return students array
-  } else {
-    console.error("No data found for class:", classId);
+    if (docSnap.exists()) {
+      return docSnap.data().students; // Return students array
+    } else {
+      console.error("No data found for class:", classId);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching leaderboard data:", error);
     return [];
   }
 }
