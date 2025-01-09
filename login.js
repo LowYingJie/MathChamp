@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import firebaseConfig from './firebase.js'; // Import your Firebase config
 
 // Initialize Firebase
@@ -7,37 +7,42 @@ const app = initializeApp(firebaseConfig);
 console.log("Firebase app initialized:", app.name);
 const auth = getAuth(app);
 
+// Hardcoded users
+const hardcodedUsers = {
+    "lowyingjie@primary.mathchamp.my": "123456",
+    "haikal@primary.mathchamp.my": "789012",
+    "zahir@primary.mathchamp.my": "345678",
+    "faiq@primary.mathchamp.my": "901234",
+    "drsuhana@primary.mathchamp.my": "567890"
+};
+
 const loginForm = document.getElementById('loginForm');
-const forgotPasswordLink = document.getElementById('forgotPassword'); // Link to trigger reset password
 
-// Login Form Submission
 loginForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault(); // Prevent page refresh
 
-    // Get email and password values
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    // Validate email ends with @primary.mathchamp.my
-    const emailPattern = /@primary\.mathchamp\.my$/;
-    if (!emailPattern.test(email)) {
-        alert("Invalid email. Please use an email ending with '@primary.mathchamp.my'.");
+    if (!email || !password) {
+        alert("Please fill in both email and password fields.");
         return;
     }
 
-    // Validate password contains "mathchamp"
-    const passwordPattern = /mathchamp/;
-    if (!passwordPattern.test(password)) {
-        alert("Invalid password. Password must contain 'mathchamp'.");
+    // Check for hardcoded credentials
+    if (hardcodedUsers[email] && hardcodedUsers[email] === password) {
+        console.log("User logged in with hardcoded credentials:", email);
+        alert(`Login successful for ${email}`);
+        window.location.href = "homepage.html"; // Redirect
         return;
     }
 
-    // Proceed with Firebase Authentication
+    // Proceed with Firebase Authentication for other users
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log("User logged in:", userCredential.user); // Successful login
+            console.log("User logged in with Firebase credentials:", userCredential.user);
             alert("Login successful!");
-            window.location.href = "homepage.html"; // Redirect to homepage
+            window.location.href = "homepage.html"; // Redirect
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -50,42 +55,6 @@ loginForm.addEventListener('submit', (e) => {
                 alert("Incorrect password.");
             } else {
                 alert("Login Failed. Please try again.");
-            }
-        });
-});
-
-// Forgot Password Functionality
-forgotPasswordLink.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent link navigation
-
-    const email = document.getElementById('email').value.trim();
-
-    if (!email) {
-        alert("Please enter your email address to reset your password.");
-        return;
-    }
-
-    // Validate email ends with @primary.mathchamp.my
-    const emailPattern = /@primary\.mathchamp\.my$/;
-    if (!emailPattern.test(email)) {
-        alert("Invalid email. Please use an email ending with '@primary.mathchamp.my'.");
-        return;
-    }
-
-    // Send password reset email
-    sendPasswordResetEmail(auth, email)
-        .then(() => {
-            alert("Password reset email sent! Please check your inbox.");
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Password Reset Error:", errorCode, errorMessage);
-
-            if (errorCode === 'auth/user-not-found') {
-                alert("No user found with this email.");
-            } else {
-                alert("Failed to send password reset email. Please try again.");
             }
         });
 });
