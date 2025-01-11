@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reset Password - MathChamp</title>
+  <title>Login - MathChamp</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,10 +12,9 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background: linear-gradient(to right, #6a11cb, #007bff);
+      background: linear-gradient(to right, #007bff, #6a11cb);
     }
     .box {
-      position: relative;
       background: #fff;
       padding: 40px 30px;
       border-radius: 10px;
@@ -31,78 +30,59 @@
     }
     .inputBox {
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .inputBox input {
       width: 100%;
-      padding: 10px 10px 10px 5px;
+      padding: 10px;
       font-size: 16px;
-      border: none;
-      border-bottom: 2px solid #ccc;
+      border: 1px solid #ccc;
+      border-radius: 5px;
       outline: none;
-      background: transparent;
     }
-    .inputBox span {
-      position: absolute;
-      left: 5px;
-      top: 10px;
-      padding: 0;
-      font-size: 16px;
-      color: #666;
-      transition: 0.3s;
-    }
-    .inputBox input:focus ~ span,
-    .inputBox input:valid ~ span {
-      top: -18px;
-      left: 5px;
-      font-size: 12px;
-      color: #007bff;
-    }
-    .inputBox i {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 2px;
-      background: #007bff;
-      border-radius: 4px;
-      transition: 0.3s;
-      transform: scaleX(0);
-      transform-origin: right;
-    }
-    .inputBox input:focus ~ i {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    .box input[type="submit"] {
+    .box button {
       width: 100%;
       background: #007bff;
+      color: white;
       border: none;
       padding: 12px;
-      color: #fff;
       font-size: 16px;
       border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s;
     }
-    .box input[type="submit"]:hover {
+    .box button:hover {
       background: #0056b3;
+    }
+    .links {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .links a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="box">
-    <form id="passwordResetForm" autocomplete="off">
-      <h2>Reset Password</h2>
+    <h2>Login</h2>
+    <form id="loginForm">
       <div class="inputBox">
-        <label for="resetEmail">Email</label>
-        <input type="email" id="resetEmail" placeholder="Enter your email" required>
-        <span>Email</span>
-        <i></i>
+        <input type="email" id="email" placeholder="Email" required>
       </div>
-      <input type="submit" value="Send Reset Link">
+      <div class="inputBox">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button type="submit">Login</button>
+      <div class="links">
+        <a href="password.html">Forgot Password?</a>
+      </div>
     </form>
   </div>
-  <script type="module" src="password.js"></script>
+  <script type="module" src="login.js"></script>
 </body>
 </html>
