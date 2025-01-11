@@ -106,23 +106,22 @@
 </head>
 <body>
   <div class="box">
-    <form id="loginForm" autocomplete="off">
+    <form id="loginForm" autocomplete="off" aria-label="Login Form">
       <h2>MathChamp Login</h2>
       <div class="inputBox">
-        <input type="email" id="email" required>
+        <input type="email" id="email" required aria-label="Email Address">
         <span>Email</span>
         <i></i>
       </div>
       <div class="inputBox">
-        <input type="password" id="password" required>
+        <input type="password" id="password" required aria-label="Password">
         <span>Password</span>
         <i></i>
       </div>
       <div class="links">
         <a href="password.html">Forgot Password?</a>
-      
       </div>
-      <input type="submit" value="Login">
+      <input type="submit" value="Login" aria-label="Login Button">
     </form>
   </div>
   <script type="module" src="login.js"></script>
