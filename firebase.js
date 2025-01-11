@@ -6,6 +6,7 @@ const firebaseConfig = {
   storageBucket: "mathchamp-b30de.firebasestorage.app",
   messagingSenderId: "668143144572",
   appId: "1:668143144572:web:f86bcd48f84d9dc82383f9"
+  measurementId: "G-EX8CWRLTTH"
 };
 
 export default firebaseConfig;
