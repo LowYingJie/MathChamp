@@ -1,8 +1,8 @@
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-app.firebaseapp.com",
-  databaseURL: "https://your-database.firebaseio.com",
+  apiKey: "AIzaSyCXXHqcCV9kaP7wBVExaqmRv1Fe78X_cx8",
+  authDomain: "mathchamp-b30de.firebaseapp.com",
+  databaseURL: "https://mathchamp-b30de-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
 
 // Initialize Firebase
