@@ -1,16 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import firebaseConfig from "./firebaseConfig.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { firebaseConfig } from "./firebaseConfig.js";
 
-let app;
-let analytics;
-
-try {
-  app = initializeApp(firebaseConfig);
-  analytics = getAnalytics(app);
-  console.log("Firebase initialized successfully.");
-} catch (error) {
-  console.error("Firebase initialization error:", error);
-}
-
-export { app, analytics };
+export const app = initializeApp(firebaseConfig);
+export const db = getDatabase(app);
