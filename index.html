@@ -5,66 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - MathChamp</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(to right, #007bff, #6a11cb);
-    }
-    .box {
-      background: #fff;
-      padding: 40px 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-    }
-    .box h2 {
-      font-size: 28px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    .inputBox {
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .inputBox input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      outline: none;
-    }
-    .box button {
-      width: 100%;
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .box button:hover {
-      background: #0056b3;
-    }
-    .links {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-    .links a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    .links a:hover {
-      text-decoration: underline;
-    }
+    /* Add your custom styles */
   </style>
 </head>
 <body>
@@ -78,10 +19,13 @@
         <input type="password" id="password" placeholder="Password" required>
       </div>
       <button type="submit">Login</button>
-      <div class="links">
-        <a href="password.html">Forgot Password?</a>
-      </div>
     </form>
+    <div class="social-login">
+      <button id="googleLoginButton">Sign in with Google</button>
+    </div>
+    <div class="links">
+      <a href="password.html">Forgot Password?</a>
+    </div>
   </div>
   <script type="module" src="login.js"></script>
 </body>
