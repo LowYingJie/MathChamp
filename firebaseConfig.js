@@ -1,5 +1,5 @@
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+export const firebaseConfig = {
+  apiKey: "AIzaSyCXXHqcCV9kaP7wBVExaqmRv1Fe78X_cx8",
   authDomain: "mathchamp-b30de.firebaseapp.com",
   databaseURL: "https://mathchamp-b30de-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "mathchamp-b30de",
@@ -8,5 +8,3 @@ const firebaseConfig = {
   appId: "1:668143144572:web:f86bcd48f84d9dc82383f9",
   measurementId: "G-EX8CWRLTTH"
 };
-
-export default firebaseConfig;
