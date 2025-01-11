@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import firebaseConfig from './firebase.js'; // Import your Firebase config
+import firebaseConfig from './firebaseConfig.js'; // Import Firebase config
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -20,6 +20,18 @@ loginForm.addEventListener('submit', (e) => {
         alert("Please fill in both email and password fields.");
         return;
     }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+
+    // Add loading indication
+    const submitButton = loginForm.querySelector('input[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.value = "Logging in...";
 
     // Proceed with Firebase Authentication
     signInWithEmailAndPassword(auth, email, password)
@@ -49,7 +61,12 @@ loginForm.addEventListener('submit', (e) => {
                     alert("Too many unsuccessful attempts. Please try again later.");
                     break;
                 default:
-                    alert("Login Failed. Please try again.");
+                    alert(`Login Failed: ${errorMessage}`);
             }
+        })
+        .finally(() => {
+            // Reset loading indication
+            submitButton.disabled = false;
+            submitButton.value = "Login";
         });
 });
