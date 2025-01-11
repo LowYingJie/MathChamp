@@ -7,15 +7,6 @@ const app = initializeApp(firebaseConfig);
 console.log("Firebase app initialized:", app.name);
 const auth = getAuth(app);
 
-// Hardcoded users
-const hardcodedUsers = {
-    "lowyingjie@primary.mathchamp.my": "123456",
-    "haikal@primary.mathchamp.my": "789012",
-    "zahir@primary.mathchamp.my": "345678",
-    "faiq@primary.mathchamp.my": "901234",
-    "drsuhana@primary.mathchamp.my": "567890"
-};
-
 const loginForm = document.getElementById('loginForm');
 
 loginForm.addEventListener('submit', (e) => {
@@ -24,37 +15,41 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
+    // Validate input fields
     if (!email || !password) {
         alert("Please fill in both email and password fields.");
         return;
     }
 
-    // Check for hardcoded credentials
-    if (hardcodedUsers[email] && hardcodedUsers[email] === password) {
-        console.log("User logged in with hardcoded credentials:", email);
-        alert(`Login successful for ${email}`);
-        window.location.href = "homepage.html"; // Redirect
-        return;
-    }
-
-    // Proceed with Firebase Authentication for other users
+    // Proceed with Firebase Authentication
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log("User logged in with Firebase credentials:", userCredential.user);
-            alert("Login successful!");
-            window.location.href = "homepage.html"; // Redirect
+            // User successfully authenticated
+            console.log("User logged in:", userCredential.user);
+            alert(`Login successful! Welcome, ${userCredential.user.email}`);
+            window.location.href = "homepage.html"; // Redirect to homepage
         })
         .catch((error) => {
+            // Handle errors
             const errorCode = error.code;
             const errorMessage = error.message;
             console.error("Login Error:", errorCode, errorMessage);
 
-            if (errorCode === 'auth/user-not-found') {
-                alert("No user found with this email.");
-            } else if (errorCode === 'auth/wrong-password') {
-                alert("Incorrect password.");
-            } else {
-                alert("Login Failed. Please try again.");
+            switch (errorCode) {
+                case 'auth/user-not-found':
+                    alert("No user found with this email.");
+                    break;
+                case 'auth/wrong-password':
+                    alert("Incorrect password.");
+                    break;
+                case 'auth/invalid-email':
+                    alert("Invalid email format.");
+                    break;
+                case 'auth/too-many-requests':
+                    alert("Too many unsuccessful attempts. Please try again later.");
+                    break;
+                default:
+                    alert("Login Failed. Please try again.");
             }
         });
 });
